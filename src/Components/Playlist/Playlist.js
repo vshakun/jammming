@@ -1,6 +1,8 @@
 import React from 'react';
 import './Playlist.css';
 import { TrackList } from '../TrackList/TrackList';
+import { Loading } from '../Loading/Loading';
+
 
 export class Playlist extends React.Component {
     constructor(props) {
@@ -15,20 +17,30 @@ export class Playlist extends React.Component {
     }
 
     handleSave() {
+        if (!this.props.playlistTracks) {
+            return;
+        }
+
         this.props.onSave();
         document.getElementById('playlist-input').value = 'New Playlist';
     }
 
     render() {
         return (
-        <div className="Playlist">
-            <input id='playlist-input' defaultValue={"New Playlist"} onChange={this.handleNameChange} />
-            <TrackList tracks={this.props.playlistTracks} 
-                    onRemove={this.props.onRemove} 
-                    isRemoval={true} 
-            />
-            <button className="Playlist-save" onClick={this.handleSave}>SAVE TO SPOTIFY</button>
-        </div>
+            <div className="Playlist">
+                <input id='playlist-input' defaultValue={"New Playlist"} onChange={this.handleNameChange} />
+                { 
+                    this.props.isLoading 
+                    ? 
+                    <Loading /> 
+                    : 
+                    <TrackList tracks={this.props.playlistTracks} 
+                        onRemove={this.props.onRemove} 
+                        isRemoval={true} 
+                    />
+                }
+                <button className="Playlist-save" onClick={this.handleSave}>SAVE TO SPOTIFY</button>
+            </div>
         );
     }
 }
