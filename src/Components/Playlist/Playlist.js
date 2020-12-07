@@ -17,7 +17,8 @@ export class Playlist extends React.Component {
     }
 
     handleSave() {
-        if (!this.props.playlistTracks) {
+        console.log(this.props.playlistTracks);
+        if (!this.props.playlistTracks || this.props.playlistTracks.length == 0) {
             return;
         }
 
@@ -25,6 +26,7 @@ export class Playlist extends React.Component {
         document.getElementById('playlist-input').value = 'New Playlist';
     }
 
+    
     render() {
         return (
             <div className="Playlist">
